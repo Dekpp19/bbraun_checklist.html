@@ -1045,7 +1045,7 @@ function buildList(viewOnly) {
 
 function calcTotals() {
   // Count checked checkboxes per column (normal rows only)
-  const sums = { btn_day:0, dev_day:0, cable_day:0, btn_night:0, dev_night:0, cable_night:0 };
+  const sums = { btn_day:0, dev_day:0, cable_day:0, watch_day:0, btn_night:0, dev_night:0, cable_night:0, watch_night:0 };
   EQUIPMENT_NORMAL.forEach((_, idx) => {
     ALL_COL_KEYS.forEach(key => {
       const cb = document.getElementById(`cb_${idx}_${key}`);
