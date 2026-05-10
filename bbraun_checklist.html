@@ -270,16 +270,17 @@ body {
 
 .cell:last-child { border-right: none; }
 
-/* Checkbox cell */
-.chk-cell {
+/* Multi-state cell with popup picker */
+.ms-cell {
   cursor: pointer;
+  position: relative;
 }
 
-.chk-cell input[type=checkbox] { display: none; }
+.ms-cell.view-only { cursor: default; pointer-events: none; }
 
-.chk-box {
-  width: 26px;
-  height: 26px;
+.ms-box {
+  width: 34px;
+  height: 30px;
   border: 1.5px solid #b0b8cc;
   border-radius: 4px;
   background: white;
@@ -288,26 +289,100 @@ body {
   justify-content: center;
   transition: all 0.12s;
   flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Sarabun', sans-serif;
+  color: var(--text);
+  user-select: none;
 }
 
-.chk-cell input:checked ~ .chk-box {
-  background: var(--check-yes);
-  border-color: var(--check-yes);
+.ms-box[data-state="check"] { background: var(--check-yes); border-color: var(--check-yes); color: white; }
+.ms-box[data-state="none"]  { background: #fff0f0; border-color: #e57373; color: #c62828; }
+.ms-box[data-state="num"]   { background: #e3f2fd; border-color: #1565c0; color: #1565c0; font-size: 12px; }
+
+/* Popup picker */
+.ms-popup {
+  position: fixed;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  border: 1px solid var(--navy-border);
+  z-index: 500;
+  overflow: hidden;
+  min-width: 160px;
+  display: none;
 }
 
-.chk-cell input:checked ~ .chk-box::after {
-  content: '✓';
+.ms-popup.open { display: block; }
+
+.ms-popup-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-family: 'Sarabun', sans-serif;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.1s;
+}
+
+.ms-popup-opt:last-child { border-bottom: none; }
+.ms-popup-opt:hover { background: var(--navy-light); }
+
+.ms-popup-opt .opt-icon {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; flex-shrink: 0;
+}
+
+.opt-check  { background: var(--check-yes); color: white; }
+.opt-none   { background: #fff0f0; border: 1.5px solid #e57373; color: #c62828; }
+.opt-num    { background: #e3f2fd; border: 1.5px solid #1565c0; color: #1565c0; }
+.opt-clear  { background: #f5f5f5; border: 1.5px solid #ccc; color: #666; }
+
+.ms-popup-num-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-top: 1px solid #f0f0f0;
+  display: none;
+}
+
+.ms-popup-num-row.show { display: flex; }
+
+.ms-popup-num-input {
+  flex: 1;
+  border: 1px solid var(--navy-border);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 14px;
+  font-family: 'Sarabun', sans-serif;
+  outline: none;
+  text-align: center;
+}
+
+.ms-popup-num-input:focus { border-color: #1565c0; }
+
+.ms-popup-num-ok {
+  padding: 7px 12px;
+  background: #1565c0;
   color: white;
-  font-size: 15px;
-  font-weight: 800;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.chk-cell:active .chk-box {
-  background: #d0e8d8;
+.popup-backdrop {
+  position: fixed; inset: 0; z-index: 499;
+  display: none;
 }
-
-/* disabled state for history view */
-.chk-cell.view-only { cursor: default; pointer-events: none; }
+.popup-backdrop.open { display: block; }
 
 /* Text input cell */
 .input-cell input, .input-cell textarea {
@@ -869,6 +944,30 @@ body {
   <button class="btn btn-summary" onclick="showSummary()"><span class="btn-icon">📋</span>สรุปผล</button>
 </div>
 
+<div class="popup-backdrop" id="popup-backdrop" onclick="closePopup()"></div>
+<div class="ms-popup" id="ms-popup">
+  <div class="ms-popup-opt" onclick="popupSelect('check')">
+    <div class="opt-icon opt-check">✓</div>
+    <span>มี / ติ๊ก</span>
+  </div>
+  <div class="ms-popup-opt" onclick="popupSelect('none')">
+    <div class="opt-icon opt-none">−</div>
+    <span>ไม่มี</span>
+  </div>
+  <div class="ms-popup-opt" onclick="popupSelect('num')">
+    <div class="opt-icon opt-num">123</div>
+    <span>ระบุตัวเลข</span>
+  </div>
+  <div class="ms-popup-opt" onclick="popupSelect('clear')">
+    <div class="opt-icon opt-clear">✕</div>
+    <span>ล้างค่า</span>
+  </div>
+  <div class="ms-popup-num-row" id="popup-num-row">
+    <input type="number" class="ms-popup-num-input" id="popup-num-input" placeholder="0" min="0">
+    <button class="ms-popup-num-ok" onclick="popupNumConfirm()">ตกลง</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -950,13 +1049,99 @@ document.getElementById('date-picker').addEventListener('change', e => {
 });
 
 /* ===================== BUILD LIST ===================== */
-function makeCheckCell(idx, colKey, viewOnly) {
+function makeMSCell(idx, colKey, viewOnly) {
   const vo = viewOnly ? ' view-only' : '';
-  const dis = viewOnly ? ' disabled' : '';
-  return `<label class="cell chk-cell${vo}" for="cb_${idx}_${colKey}">
-    <input type="checkbox" id="cb_${idx}_${colKey}"${dis}>
-    <div class="chk-box"></div>
-  </label>`;
+  const tabIndex = viewOnly ? '' : ' tabindex="0"';
+  return `<div class="cell ms-cell${vo}" id="ms_${idx}_${colKey}"${tabIndex}>
+    <div class="ms-box" data-state="" data-idx="${idx}" data-key="${colKey}"></div>
+  </div>`;
+}
+
+function getMSValue(idx, colKey) {
+  const box = document.getElementById(`ms_${idx}_${colKey}`)?.querySelector('.ms-box');
+  if (!box) return null;
+  const state = box.dataset.state;
+  if (state === 'check') return true;
+  if (state === 'none') return '-';
+  if (state === 'num') return box.textContent.trim();
+  return null;
+}
+
+function setMSValue(idx, colKey, val) {
+  const box = document.getElementById(`ms_${idx}_${colKey}`)?.querySelector('.ms-box');
+  if (!box) return;
+  if (val === true || val === 'true') {
+    box.dataset.state = 'check'; box.textContent = '✓';
+  } else if (val === '-' || val === false) {
+    box.dataset.state = 'none'; box.textContent = '−';
+  } else if (val !== null && val !== undefined && val !== '') {
+    box.dataset.state = 'num'; box.textContent = val;
+  } else {
+    box.dataset.state = ''; box.textContent = '';
+  }
+}
+
+let _popupTarget = null;
+
+function openPopup(idx, key, anchorEl) {
+  _popupTarget = { idx, key };
+  const popup = document.getElementById('ms-popup');
+  const numRow = document.getElementById('popup-num-row');
+  const numInput = document.getElementById('popup-num-input');
+  numRow.classList.remove('show');
+  numInput.value = '';
+
+  // Position popup near the tapped cell
+  const rect = anchorEl.getBoundingClientRect();
+  const popupW = 180;
+  let left = rect.left;
+  let top = rect.bottom + 4;
+  if (left + popupW > window.innerWidth) left = window.innerWidth - popupW - 8;
+  if (top + 220 > window.innerHeight) top = rect.top - 220;
+  popup.style.left = left + 'px';
+  popup.style.top = top + 'px';
+  popup.classList.add('open');
+  document.getElementById('popup-backdrop').classList.add('open');
+}
+
+function closePopup() {
+  document.getElementById('ms-popup').classList.remove('open');
+  document.getElementById('popup-backdrop').classList.remove('open');
+  document.getElementById('popup-num-row').classList.remove('show');
+  _popupTarget = null;
+}
+
+function popupSelect(type) {
+  if (!_popupTarget) return;
+  const { idx, key } = _popupTarget;
+  if (type === 'check')  { setMSValue(idx, key, true); closePopup(); }
+  else if (type === 'none')  { setMSValue(idx, key, '-'); closePopup(); }
+  else if (type === 'clear') { setMSValue(idx, key, null); closePopup(); }
+  else if (type === 'num') {
+    document.getElementById('popup-num-row').classList.add('show');
+    setTimeout(() => document.getElementById('popup-num-input').focus(), 50);
+  }
+}
+
+function popupNumConfirm() {
+  if (!_popupTarget) return;
+  const { idx, key } = _popupTarget;
+  const val = document.getElementById('popup-num-input').value;
+  if (val !== '') setMSValue(idx, key, val);
+  closePopup();
+}
+
+document.getElementById('popup-num-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') popupNumConfirm();
+});
+
+function attachMSEvents() {
+  document.querySelectorAll('.ms-cell:not(.view-only)').forEach(cell => {
+    const box = cell.querySelector('.ms-box');
+    cell.addEventListener('click', () => {
+      openPopup(box.dataset.idx, box.dataset.key, cell);
+    });
+  });
 }
 
 function makeInputCell(id, placeholder, viewOnly) {
@@ -977,23 +1162,23 @@ function buildList(viewOnly) {
   const list = document.getElementById('equip-list');
   list.innerHTML = '';
 
-  // Normal rows — checkbox
+  // Normal rows — multi-state cell
   EQUIPMENT_NORMAL.forEach((equip, idx) => {
     const row = document.createElement('div');
     row.className = 'equip-row';
     row.innerHTML = `
       <div class="row-id">${equip}</div>
       <div class="row-day-cells">
-        ${makeCheckCell(idx,'btn_day',viewOnly)}
-        ${makeCheckCell(idx,'dev_day',viewOnly)}
-        ${makeCheckCell(idx,'cable_day',viewOnly)}
-        ${makeCheckCell(idx,'watch_day',viewOnly)}
+        ${makeMSCell(idx,'btn_day',viewOnly)}
+        ${makeMSCell(idx,'dev_day',viewOnly)}
+        ${makeMSCell(idx,'cable_day',viewOnly)}
+        ${makeMSCell(idx,'watch_day',viewOnly)}
       </div>
       <div class="row-night-cells">
-        ${makeCheckCell(idx,'btn_night',viewOnly)}
-        ${makeCheckCell(idx,'dev_night',viewOnly)}
-        ${makeCheckCell(idx,'cable_night',viewOnly)}
-        ${makeCheckCell(idx,'watch_night',viewOnly)}
+        ${makeMSCell(idx,'btn_night',viewOnly)}
+        ${makeMSCell(idx,'dev_night',viewOnly)}
+        ${makeMSCell(idx,'cable_night',viewOnly)}
+        ${makeMSCell(idx,'watch_night',viewOnly)}
       </div>
     `;
     list.appendChild(row);
@@ -1041,15 +1226,16 @@ function buildList(viewOnly) {
     </div>
   `;
   list.appendChild(totalRow);
+  if (!viewOnly) attachMSEvents();
 }
 
 function calcTotals() {
-  // Count checked checkboxes per column (normal rows only)
   const sums = { btn_day:0, dev_day:0, cable_day:0, watch_day:0, btn_night:0, dev_night:0, cable_night:0, watch_night:0 };
   EQUIPMENT_NORMAL.forEach((_, idx) => {
     ALL_COL_KEYS.forEach(key => {
-      const cb = document.getElementById(`cb_${idx}_${key}`);
-      if (cb && cb.checked) sums[key]++;
+      const val = getMSValue(idx, key);
+      if (val === true) sums[key]++;
+      else if (val && val !== '-') sums[key] += parseInt(val) || 0;
     });
   });
   // Add special row numbers
@@ -1074,8 +1260,7 @@ function getFormData() {
   EQUIPMENT_NORMAL.forEach((_, idx) => {
     checks[idx] = {};
     ALL_COL_KEYS.forEach(key => {
-      const cb = document.getElementById(`cb_${idx}_${key}`);
-      checks[idx][key] = cb ? cb.checked : false;
+      checks[idx][key] = getMSValue(idx, key);
     });
   });
   // Special row numbers
@@ -1113,11 +1298,9 @@ function getFormData() {
 function applyFormData(data, viewOnly) {
   EQUIPMENT_NORMAL.forEach((_, idx) => {
     ALL_COL_KEYS.forEach(key => {
-      const cb = document.getElementById(`cb_${idx}_${key}`);
-      if (cb) {
-        cb.checked = data.checks?.[idx]?.[key] || false;
-        cb.disabled = viewOnly;
-      }
+      setMSValue(idx, key, data.checks?.[idx]?.[key] ?? null);
+      const cell = document.getElementById(`ms_${idx}_${key}`);
+      if (cell) cell.classList.toggle('view-only', viewOnly);
     });
   });
   // Special rows
@@ -1145,10 +1328,7 @@ function applyFormData(data, viewOnly) {
 
 function clearForm() {
   EQUIPMENT_NORMAL.forEach((_, idx) => {
-    ALL_COL_KEYS.forEach(key => {
-      const cb = document.getElementById(`cb_${idx}_${key}`);
-      if (cb) { cb.checked = false; cb.disabled = false; }
-    });
+    ALL_COL_KEYS.forEach(key => { setMSValue(idx, key, null); });
   });
   EQUIPMENT_SPECIAL.forEach((_, si) => {
     const idx = EQUIPMENT_NORMAL.length + si;
@@ -1171,8 +1351,12 @@ function setLocked(locked) {
   isLocked = locked;
   EQUIPMENT_NORMAL.forEach((_, idx) => {
     ALL_COL_KEYS.forEach(key => {
-      const cb = document.getElementById(`cb_${idx}_${key}`);
-      if (cb) cb.disabled = locked;
+      const cell = document.getElementById(`ms_${idx}_${key}`);
+      if (cell) {
+        cell.classList.toggle('view-only', locked);
+        if (locked) cell.removeAttribute('tabindex');
+        else cell.setAttribute('tabindex', '0');
+      }
     });
   });
   EQUIPMENT_SPECIAL.forEach((_, si) => {
@@ -1235,11 +1419,16 @@ function showSummary() {
   const colLabels = ['กระดุม 07-19น.','ตัวเครื่อง 07-19น.','สายชาร์จ 07-19น.','Smart Watch 07-19น.','กระดุม 19-07น.','ตัวเครื่อง 19-07น.','สายชาร์จ 19-07น.','Smart Watch 19-07น.'];
   const hdrCells = colLabels.map(c => `<th>${c}</th>`).join('');
 
-  // Normal rows (checkboxes → ✓/—)
+  // Normal rows
   const normalRows = EQUIPMENT_NORMAL.map((equip, idx) => {
-    const cells = ALL_COL_KEYS.map(key =>
-      `<td>${data.checks?.[idx]?.[key] ? '✓' : '—'}</td>`
-    ).join('');
+    const cells = ALL_COL_KEYS.map(key => {
+      const val = data.checks?.[idx]?.[key];
+      let disp = '—';
+      if (val === true || val === 'true') disp = '✓';
+      else if (val === '-') disp = '−';
+      else if (val !== null && val !== undefined && val !== '' && val !== false) disp = val;
+      return `<td>${disp}</td>`;
+    }).join('');
     return `<tr><td>${equip}</td>${cells}</tr>`;
   }).join('');
 
@@ -1317,7 +1506,11 @@ function calcSummaryFromRecord(r) {
   // Count checked per column from normal rows
   const c = { btn_day:0, dev_day:0, cable_day:0, watch_day:0, btn_night:0, dev_night:0, cable_night:0, watch_night:0 };
   EQUIPMENT_NORMAL.forEach((_, idx) => {
-    ALL_COL_KEYS.forEach(key => { if (r.checks?.[idx]?.[key]) c[key]++; });
+    ALL_COL_KEYS.forEach(key => {
+      const val = r.checks?.[idx]?.[key];
+      if (val === true || val === 'true') c[key]++;
+      else if (val && val !== '-' && val !== false) c[key] += parseInt(val) || 0;
+    });
   });
   // Add special rows
   EQUIPMENT_SPECIAL.forEach((_, si) => {
