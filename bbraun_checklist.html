@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ใบบันทึกเครื่อง B Braun และสายชาร์จเครื่อง B Braun</title>
+<title>ใบบันทึกเครื่อง B Braun</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap');
 
@@ -33,6 +33,101 @@ body {
   padding-bottom: 100px;
 }
 
+/* ===== LOGIN PAGE ===== */
+#login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 20px;
+}
+
+.login-box {
+  background: white;
+  border-radius: 14px;
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+}
+
+.login-logo {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.login-logo h1 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.login-logo p {
+  font-size: 12px;
+  color: var(--gray-400);
+}
+
+.login-field {
+  margin-bottom: 14px;
+}
+
+.login-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 5px;
+}
+
+.login-field input {
+  width: 100%;
+  border: 1.5px solid var(--navy-border);
+  border-radius: 7px;
+  padding: 10px 14px;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.login-field input:focus {
+  border-color: var(--navy);
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 7px;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: opacity 0.2s;
+}
+
+.login-btn:active { opacity: 0.85; }
+
+.login-error {
+  background: #fff0f0;
+  border: 1px solid #e57373;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #c62828;
+  margin-top: 10px;
+  text-align: center;
+  display: none;
+}
+
+.login-error.show { display: block; }
+
 /* ===== HEADER ===== */
 .page-header {
   background: var(--navy);
@@ -44,6 +139,7 @@ body {
 .header-top {
   padding: 14px 20px 10px;
   text-align: center;
+  position: relative;
 }
 
 .header-top h1 {
@@ -51,6 +147,35 @@ body {
   font-weight: 700;
   letter-spacing: 0.2px;
   line-height: 1.5;
+}
+
+.ward-badge {
+  display: inline-block;
+  background: rgba(184,150,12,0.25);
+  border: 1px solid var(--gold);
+  color: #f0d060;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 20px;
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+}
+
+.logout-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.85);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .header-bottom {
@@ -91,7 +216,6 @@ body {
   border-color: rgba(255,255,255,0.5);
 }
 
-/* ===== NAV TABS ===== */
 .nav-tabs {
   display: flex;
   background: var(--navy);
@@ -110,7 +234,6 @@ body {
   cursor: pointer;
   border-bottom: 3px solid transparent;
   transition: all 0.2s;
-  letter-spacing: 0.2px;
 }
 
 .nav-tab.active {
@@ -228,9 +351,7 @@ body {
   min-height: 46px;
 }
 
-.equip-row:nth-child(even) {
-  background: #fafbfd;
-}
+.equip-row:nth-child(even) { background: #fafbfd; }
 
 .row-id {
   min-width: 80px;
@@ -244,7 +365,6 @@ body {
   border-right: 1px solid var(--navy-border);
   padding: 6px 4px;
   text-align: center;
-  letter-spacing: 0.3px;
 }
 
 .row-day-cells {
@@ -270,12 +390,7 @@ body {
 
 .cell:last-child { border-right: none; }
 
-/* Multi-state cell with popup picker */
-.ms-cell {
-  cursor: pointer;
-  position: relative;
-}
-
+.ms-cell { cursor: pointer; position: relative; }
 .ms-cell.view-only { cursor: default; pointer-events: none; }
 
 .ms-box {
@@ -287,8 +402,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.12s;
-  flex-shrink: 0;
   font-size: 13px;
   font-weight: 700;
   font-family: 'Sarabun', sans-serif;
@@ -300,7 +413,6 @@ body {
 .ms-box[data-state="none"]  { background: #fff0f0; border-color: #e57373; color: #c62828; }
 .ms-box[data-state="num"]   { background: #e3f2fd; border-color: #1565c0; color: #1565c0; font-size: 12px; }
 
-/* Popup picker */
 .ms-popup {
   position: fixed;
   background: white;
@@ -324,7 +436,6 @@ body {
   font-family: 'Sarabun', sans-serif;
   cursor: pointer;
   border-bottom: 1px solid #f0f0f0;
-  transition: background 0.1s;
 }
 
 .ms-popup-opt:last-child { border-bottom: none; }
@@ -334,7 +445,7 @@ body {
   width: 28px; height: 28px;
   border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 700; flex-shrink: 0;
+  font-size: 14px; font-weight: 700;
 }
 
 .opt-check  { background: var(--check-yes); color: white; }
@@ -343,12 +454,11 @@ body {
 .opt-clear  { background: #f5f5f5; border: 1.5px solid #ccc; color: #666; }
 
 .ms-popup-num-row {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 6px;
   padding: 8px 12px;
   border-top: 1px solid #f0f0f0;
-  display: none;
 }
 
 .ms-popup-num-row.show { display: flex; }
@@ -363,8 +473,6 @@ body {
   outline: none;
   text-align: center;
 }
-
-.ms-popup-num-input:focus { border-color: #1565c0; }
 
 .ms-popup-num-ok {
   padding: 7px 12px;
@@ -384,7 +492,6 @@ body {
 }
 .popup-backdrop.open { display: block; }
 
-/* Text input cell */
 .input-cell input, .input-cell textarea {
   width: 100%;
   border: none;
@@ -397,30 +504,11 @@ body {
   padding: 2px;
 }
 
-/* ===== SPECIAL ROWS ===== */
-.row-special .row-id {
-  font-size: 11px;
-  color: var(--red);
-  font-weight: 600;
-}
+.row-special .row-id { font-size: 11px; color: var(--red); font-weight: 600; }
 
-.row-total {
-  background: #f0f2f8 !important;
-  border-top: 2px solid var(--navy-border);
-}
-
-.row-total .row-id {
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--navy);
-  background: var(--navy-light);
-}
-
-.row-total .cell input {
-  font-weight: 700;
-  font-size: 13px;
-  color: var(--navy);
-}
+.row-total { background: #f0f2f8 !important; border-top: 2px solid var(--navy-border); }
+.row-total .row-id { font-size: 13px; font-weight: 800; color: var(--navy); background: var(--navy-light); }
+.row-total .cell input { font-weight: 700; font-size: 13px; color: var(--navy); }
 
 /* ===== BOTTOM SECTION ===== */
 .bottom-wrap {
@@ -436,7 +524,6 @@ body {
   font-size: 12px;
   font-weight: 700;
   padding: 7px 16px;
-  letter-spacing: 0.5px;
 }
 
 .patient-grid {
@@ -472,7 +559,6 @@ body {
   resize: none;
   outline: none;
   min-height: 55px;
-  color: var(--text);
 }
 
 .note-section {
@@ -526,12 +612,9 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  transition: opacity 0.15s, transform 0.1s;
-  letter-spacing: 0.2px;
 }
 
 .btn-icon { font-size: 16px; }
-.btn:active { opacity: 0.8; transform: scale(0.97); }
 
 .btn-save { background: #1b4332; color: white; }
 .btn-edit { background: #7c4a00; color: white; }
@@ -545,7 +628,6 @@ body {
   color: white; padding: 9px 20px; border-radius: 20px;
   font-size: 13px; z-index: 999; opacity: 0;
   transition: opacity 0.3s; pointer-events: none; white-space: nowrap;
-  border: 1px solid rgba(255,255,255,0.1);
 }
 .toast.show { opacity: 1; }
 
@@ -568,24 +650,6 @@ body {
 .sum-header h2 { font-size: 17px; font-weight: 700; }
 .sum-header p { font-size: 12px; opacity: 0.75; margin-top: 4px; }
 
-.sum-stat-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin: 12px 14px;
-}
-
-.stat-card {
-  background: white;
-  border-radius: 8px;
-  padding: 14px;
-  text-align: center;
-  border: 1px solid var(--navy-border);
-}
-
-.stat-card .num { font-size: 28px; font-weight: 800; color: var(--navy); }
-.stat-card .lbl { font-size: 11px; color: var(--gray-400); margin-top: 3px; }
-
 .sum-card {
   background: white;
   margin: 10px 14px;
@@ -600,7 +664,6 @@ body {
   padding: 8px 14px;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.3px;
 }
 
 .sum-tbl {
@@ -612,7 +675,7 @@ body {
 
 .sum-tbl th {
   background: var(--navy-light);
-  padding: 6px 6px;
+  padding: 6px;
   font-size: 10px;
   color: var(--navy);
   border-bottom: 1px solid var(--navy-border);
@@ -629,7 +692,6 @@ body {
 }
 
 .sum-tbl td:first-child { text-align: left; font-weight: 700; color: var(--navy); }
-.sum-tbl tr:last-child td { border-bottom: none; }
 
 .back-btn {
   display: block;
@@ -644,29 +706,6 @@ body {
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  text-align: center;
-}
-
-/* ===== QR DISPLAY ===== */
-.qr-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.qr-img {
-  width: 52px;
-  height: 52px;
-  border-radius: 4px;
-  border: 2px solid rgba(255,255,255,0.3);
-  display: block;
-}
-
-.qr-hint {
-  font-size: 10px;
-  color: rgba(255,255,255,0.6);
-  line-height: 1.4;
 }
 
 /* ===== HISTORY PAGE ===== */
@@ -689,11 +728,7 @@ body {
   z-index: 40;
 }
 
-.hist-month-label {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--navy);
-}
+.hist-month-label { font-size: 15px; font-weight: 700; color: var(--navy); }
 
 .mnav-btn {
   width: 34px; height: 34px;
@@ -704,10 +739,7 @@ body {
   font-size: 17px;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
 }
-
-.mnav-btn:hover { background: var(--navy); color: white; }
 
 .hist-list { padding: 10px 14px; display: flex; flex-direction: column; gap: 8px; }
 
@@ -718,15 +750,12 @@ body {
   border-left: 4px solid var(--navy-border);
   padding: 12px 14px;
   cursor: pointer;
-  transition: all 0.15s;
 }
 
 .hist-item:hover { border-left-color: var(--navy); }
-.hist-item:active { transform: scale(0.99); }
 
-.hist-item-top { margin-bottom: 10px; }
 .hist-item-date { font-size: 14px; font-weight: 700; color: var(--navy); }
-.hist-item-meta { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+.hist-item-meta { font-size: 11px; color: var(--gray-400); margin-top: 2px; margin-bottom: 10px; }
 
 .hist-summary-grid {
   display: grid;
@@ -742,10 +771,7 @@ body {
   border: 1px solid #f9e88a;
 }
 
-.hist-shift-night {
-  background: #f3e5f5;
-  border-color: #d7b8e8;
-}
+.hist-shift-night { background: #f3e5f5; border-color: #d7b8e8; }
 
 .hist-shift-title {
   font-size: 11px;
@@ -756,17 +782,15 @@ body {
   border-bottom: 1px solid rgba(0,0,0,0.07);
 }
 
-.hist-shift-rows { display: flex; flex-direction: column; gap: 3px; }
-
 .hist-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   font-size: 12px;
+  margin-bottom: 2px;
 }
 
 .hist-lbl { color: #555; }
-.hist-val { font-weight: 700; color: var(--navy); min-width: 24px; text-align: right; }
+.hist-val { font-weight: 700; color: var(--navy); }
 
 .hist-note {
   font-size: 12px;
@@ -777,33 +801,22 @@ body {
   margin-bottom: 6px;
 }
 
-.hist-open-hint {
-  font-size: 11px;
-  color: var(--gray-400);
-  text-align: right;
-}
+.hist-open-hint { font-size: 11px; color: var(--gray-400); text-align: right; }
 
-.hist-empty {
-  text-align: center;
-  padding: 50px 20px;
-  color: var(--gray-400);
-}
-
+.hist-empty { text-align: center; padding: 50px 20px; color: var(--gray-400); }
 .hist-empty-icon { font-size: 42px; margin-bottom: 12px; }
 
-/* Loading overlay */
 .loading-screen {
   position: fixed; inset: 0; background: rgba(27,42,71,0.7);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 999; display: none;
+  display: none; align-items: center; justify-content: center;
+  z-index: 999;
 }
-
 .loading-box {
   background: white; border-radius: 12px; padding: 24px 32px;
   text-align: center; font-size: 14px; color: var(--navy); font-weight: 600;
 }
 
-#main-page { display: block; }
+#main-page { display: none; }
 </style>
 </head>
 <body>
@@ -813,12 +826,35 @@ body {
   <div class="loading-box">⏳ กำลังโหลด...</div>
 </div>
 
+<!-- ====== LOGIN PAGE ====== -->
+<div id="login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <div style="font-size:36px; margin-bottom:8px;">🏥</div>
+      <h1>ใบบันทึกเครื่อง B Braun<br>และสายชาร์จเครื่อง B Braun</h1>
+      <p>กรุณาเข้าสู่ระบบด้วยบัญชี Ward ของคุณ</p>
+    </div>
+    <div class="login-field">
+      <label>Username (Ward)</label>
+      <input type="text" id="login-user" placeholder="เช่น ward14e" autocomplete="username" autocapitalize="none">
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="login-pass" placeholder="รหัสผ่าน" autocomplete="current-password">
+    </div>
+    <button class="login-btn" onclick="doLogin()">เข้าสู่ระบบ</button>
+    <div class="login-error" id="login-error">Username หรือ Password ไม่ถูกต้อง</div>
+  </div>
+</div>
+
+<!-- ====== MAIN APP ====== -->
 <div id="main-page">
 
-<!-- HEADER -->
 <div class="page-header">
   <div class="header-top">
     <h1>ใบบันทึกเครื่อง B Braun และสายชาร์จเครื่อง B Braun</h1>
+    <div class="ward-badge" id="ward-badge"></div>
+    <button class="logout-btn" onclick="doLogout()">ออกจากระบบ</button>
   </div>
   <div class="header-bottom">
     <div class="date-control">
@@ -826,83 +862,70 @@ body {
       <input type="date" class="date-input" id="date-picker">
       <span class="date-label" id="thai-date"></span>
     </div>
-    <div class="qr-section">
-      <img class="qr-img" id="qr-img" src="data:image/png;base64,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" alt="QR">
-      <div class="qr-hint">สแกน QR<br>เพื่อเปิดแบบฟอร์ม</div>
-    </div>
   </div>
-  <!-- NAV TABS -->
   <div class="nav-tabs">
     <button class="nav-tab active" id="tab-form" onclick="switchPage('form')">📝 บันทึกวันนี้</button>
     <button class="nav-tab" id="tab-history" onclick="switchPage('history')">📅 ดูย้อนหลัง</button>
   </div>
 </div>
 
-<!-- ====== FORM PAGE ====== -->
+<!-- FORM PAGE -->
 <div id="form-page">
-
-<!-- SHIFT INFO -->
-<div class="shift-legend">
-  <div class="legend-col">
-    <strong>เวร 07-19น. (13 เครื่อง / สายชาร์จ 12 สาย)</strong>
-    กำหนดเวลาตรวจนับ 17-18น.<br>
-    กระดุม ตรวจนับ 7-19น.
+  <div class="shift-legend">
+    <div class="legend-col">
+      <strong>เวร 07-19น. (13 เครื่อง / สายชาร์จ 12 สาย)</strong>
+      กำหนดเวลาตรวจนับ 17-18น.<br>กระดุม ตรวจนับ 7-19น.
+    </div>
+    <div class="legend-col">
+      <strong>เวร 19-07น.</strong>
+      กำหนดเวลาตรวจนับ 05-06น.<br>กระดุม ตรวจนับ 19-7น.
+    </div>
   </div>
-  <div class="legend-col">
-    <strong>เวร 19-07น.</strong>
-    กำหนดเวลาตรวจนับ 05-06น.<br>
-    กระดุม ตรวจนับ 19-7น.
+
+  <div class="tbl-header">
+    <div class="th-id">หมายเลข</div>
+    <div class="th-group">
+      <div class="th-group-title">07-19น. — กำหนดเวลาตรวจนับ 17-18น.</div>
+      <div class="th-cols">
+        <div class="th-col">กระดุม<br>7-19น.</div>
+        <div class="th-col">ตัวเครื่อง</div>
+        <div class="th-col">สายชาร์จ</div>
+        <div class="th-col">Smart<br>Watch</div>
+      </div>
+    </div>
+    <div class="th-night-group">
+      <div class="th-group-title">19-07น. — กำหนดเวลาตรวจนับ 05-06น.</div>
+      <div class="th-night-cols">
+        <div class="th-night-col">กระดุม<br>19-7น.</div>
+        <div class="th-night-col">ตัวเครื่อง</div>
+        <div class="th-night-col">สายชาร์จ</div>
+        <div class="th-night-col">Smart<br>Watch</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="equip-list"></div>
+
+  <div class="bottom-wrap">
+    <div class="section-title">ยอดผู้ป่วย</div>
+    <div class="patient-grid">
+      <div class="patient-box">
+        <label>ยอดผู้ป่วย (07-19น.)</label>
+        <textarea id="patient-day" placeholder="กรอกยอดผู้ป่วย..."></textarea>
+      </div>
+      <div class="patient-box">
+        <label>ยอดผู้ป่วย (19-07น.)</label>
+        <textarea id="patient-night" placeholder="กรอกยอดผู้ป่วย..."></textarea>
+      </div>
+    </div>
+    <div class="note-section">
+      <label>หมายเหตุ</label>
+      <textarea id="note-field" placeholder="บันทึกหมายเหตุ..."></textarea>
+    </div>
   </div>
 </div>
 
-<!-- TABLE HEADER -->
-<div class="tbl-header">
-  <div class="th-id">หมายเลข</div>
-  <div class="th-group">
-    <div class="th-group-title">07-19น. — กำหนดเวลาตรวจนับ 17-18น.</div>
-    <div class="th-cols">
-      <div class="th-col">กระดุม<br>7-19น.</div>
-      <div class="th-col">ตัวเครื่อง</div>
-      <div class="th-col">สายชาร์จ</div>
-      <div class="th-col">Smart<br>Watch</div>
-    </div>
-  </div>
-  <div class="th-night-group">
-    <div class="th-group-title">19-07น. — กำหนดเวลาตรวจนับ 05-06น.</div>
-    <div class="th-night-cols">
-      <div class="th-night-col">กระดุม<br>19-7น.</div>
-      <div class="th-night-col">ตัวเครื่อง</div>
-      <div class="th-night-col">สายชาร์จ</div>
-      <div class="th-night-col">Smart<br>Watch</div>
-    </div>
-  </div>
-</div>
-
-<!-- EQUIPMENT LIST -->
-<div id="equip-list"></div>
-
-<!-- BOTTOM SECTION -->
-<div class="bottom-wrap">
-  <div class="section-title">ยอดผู้ป่วย</div>
-  <div class="patient-grid">
-    <div class="patient-box">
-      <label>ยอดผู้ป่วย (07-19น.)</label>
-      <textarea id="patient-day" placeholder="กรอกยอดผู้ป่วย..."></textarea>
-    </div>
-    <div class="patient-box">
-      <label>ยอดผู้ป่วย (19-07น.)</label>
-      <textarea id="patient-night" placeholder="กรอกยอดผู้ป่วย..."></textarea>
-    </div>
-  </div>
-  <div class="note-section">
-    <label>หมายเหตุ</label>
-    <textarea id="note-field" placeholder="บันทึกหมายเหตุ..."></textarea>
-  </div>
-</div>
-
-</div><!-- /form-page -->
-
-<!-- ====== HISTORY PAGE ====== -->
+<!-- HISTORY PAGE -->
 <div id="history-page">
   <div class="hist-month-nav">
     <button class="mnav-btn" onclick="changeMonth(-1)">‹</button>
@@ -919,13 +942,12 @@ body {
 
 </div><!-- /main-page -->
 
-<!-- ====== SUMMARY PAGE ====== -->
+<!-- SUMMARY PAGE -->
 <div id="summary-page">
   <div class="sum-header">
     <h2>สรุปผลการตรวจนับ</h2>
-    <p id="sum-date-label">ใบบันทึกเครื่อง B Braun และสายชาร์จเครื่อง B Braun</p>
+    <p id="sum-date-label"></p>
   </div>
-  <div class="sum-stat-grid" id="stat-grid"></div>
   <div class="sum-card">
     <div class="sum-card-hdr">รายละเอียดการตรวจนับ</div>
     <div style="overflow-x:auto;" id="summary-table-wrap"></div>
@@ -947,20 +969,16 @@ body {
 <div class="popup-backdrop" id="popup-backdrop" onclick="closePopup()"></div>
 <div class="ms-popup" id="ms-popup">
   <div class="ms-popup-opt" onclick="popupSelect('check')">
-    <div class="opt-icon opt-check">✓</div>
-    <span>มี / ติ๊ก</span>
+    <div class="opt-icon opt-check">✓</div><span>มี / ติ๊ก</span>
   </div>
   <div class="ms-popup-opt" onclick="popupSelect('none')">
-    <div class="opt-icon opt-none">−</div>
-    <span>ไม่มี</span>
+    <div class="opt-icon opt-none">−</div><span>ไม่มี</span>
   </div>
   <div class="ms-popup-opt" onclick="popupSelect('num')">
-    <div class="opt-icon opt-num">123</div>
-    <span>ระบุตัวเลข</span>
+    <div class="opt-icon opt-num">123</div><span>ระบุตัวเลข</span>
   </div>
   <div class="ms-popup-opt" onclick="popupSelect('clear')">
-    <div class="opt-icon opt-clear">✕</div>
-    <span>ล้างค่า</span>
+    <div class="opt-icon opt-clear">✕</div><span>ล้างค่า</span>
   </div>
   <div class="ms-popup-num-row" id="popup-num-row">
     <input type="number" class="ms-popup-num-input" id="popup-num-input" placeholder="0" min="0">
@@ -971,6 +989,23 @@ body {
 <div class="toast" id="toast"></div>
 
 <script>
+/* =====================================================
+   ===== กำหนด Ward / Password ตรงนี้ =====
+   เพิ่ม Ward ได้โดยใช้รูปแบบ "username": "password"
+   =====================================================*/
+const WARD_ACCOUNTS = {
+  "ward7e":   "pattaya7e",
+  "ward8e":   "pattaya8e",
+  "ward9e":   "pattaya9e",
+  "ward10e":  "pattaya10e",
+  "ward11e":  "pattaya11e",
+  "ward12e":  "pattaya12e",
+  "ward14e":  "pattaya14e",
+  "ward15e":  "pattaya15e"
+  /* เพิ่ม Ward ใหม่ได้ที่นี่ */
+};
+/* ===================================================== */
+
 const EQUIPMENT_NORMAL = [
   '15501','15502','15503','15504','15505','15506','15507',
   '15508','15509','15510','15511','15512','15514','15515',
@@ -982,26 +1017,64 @@ const COL_KEYS_DAY   = ['btn_day','dev_day','cable_day','watch_day'];
 const COL_KEYS_NIGHT = ['btn_night','dev_night','cable_night','watch_night'];
 const ALL_COL_KEYS   = [...COL_KEYS_DAY, ...COL_KEYS_NIGHT];
 
-const FIREBASE_URL = 'https://bbraun-checklist-a6d8d-default-rtdb.asia-southeast1.firebasedatabase.app/records';
-
-const SPECIAL_COL_KEYS = ['btn_day','dev_day','cable_day','btn_night','dev_night','cable_night'];
+const FIREBASE_BASE = 'https://bbraun-checklist-a6d8d-default-rtdb.asia-southeast1.firebasedatabase.app';
 
 let savedData = null;
 let isLocked = false;
 let currentPage = 'form';
 let histMonth = { y: new Date().getFullYear(), m: new Date().getMonth() };
+let currentWard = null;
 
-/* ===================== FIREBASE STORAGE ===================== */
+/* ===== LOGIN ===== */
+function doLogin() {
+  const user = document.getElementById('login-user').value.trim().toLowerCase();
+  const pass = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-error');
+  if (WARD_ACCOUNTS[user] && WARD_ACCOUNTS[user] === pass) {
+    currentWard = user;
+    sessionStorage.setItem('bbraun_ward', user);
+    errEl.classList.remove('show');
+    document.getElementById('login-page').style.display = 'none';
+    document.getElementById('main-page').style.display = 'block';
+    document.getElementById('action-bar').style.display = 'flex';
+    document.getElementById('ward-badge').textContent = '🏥 ' + user.toUpperCase();
+    initApp();
+  } else {
+    errEl.classList.add('show');
+  }
+}
+
+function doLogout() {
+  if (!confirm('ออกจากระบบใช่ไหม?')) return;
+  currentWard = null;
+  sessionStorage.removeItem('bbraun_ward');
+  document.getElementById('main-page').style.display = 'none';
+  document.getElementById('summary-page').style.display = 'none';
+  document.getElementById('action-bar').style.display = 'none';
+  document.getElementById('login-page').style.display = 'flex';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+}
+
+document.getElementById('login-pass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+/* ===== FIREBASE — path แยกตาม Ward ===== */
+function wardPath() {
+  return `${FIREBASE_BASE}/wards/${currentWard}/records`;
+}
+
 async function storageGet(dateKey) {
   try {
-    const res = await fetch(`${FIREBASE_URL}/${dateKey}.json`);
+    const res = await fetch(`${wardPath()}/${dateKey}.json`);
     if (!res.ok) return null;
     return await res.json();
   } catch(e) { return null; }
 }
 
 async function storageSet(dateKey, data) {
-  const res = await fetch(`${FIREBASE_URL}/${dateKey}.json`, {
+  const res = await fetch(`${wardPath()}/${dateKey}.json`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
@@ -1011,13 +1084,13 @@ async function storageSet(dateKey, data) {
 
 async function storageDelete(dateKey) {
   try {
-    await fetch(`${FIREBASE_URL}/${dateKey}.json`, { method: 'DELETE' });
+    await fetch(`${wardPath()}/${dateKey}.json`, { method: 'DELETE' });
   } catch(e) {}
 }
 
 async function storageListKeys() {
   try {
-    const res = await fetch(`${FIREBASE_URL}.json?shallow=true`);
+    const res = await fetch(`${wardPath()}.json?shallow=true`);
     if (!res.ok) return [];
     const data = await res.json();
     if (!data) return [];
@@ -1025,7 +1098,7 @@ async function storageListKeys() {
   } catch(e) { return []; }
 }
 
-/* ===================== DATE ===================== */
+/* ===== DATE ===== */
 function todayKey() {
   const n = new Date();
   return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}`;
@@ -1043,16 +1116,10 @@ function updateThaiDate(val) {
   document.getElementById('thai-date').textContent = `(${parseInt(d)}/${parseInt(m)}/${parseInt(y)+543})`;
 }
 
-document.getElementById('date-picker').addEventListener('change', e => {
-  updateThaiDate(e.target.value);
-  loadDateRecord(e.target.value);
-});
-
-/* ===================== BUILD LIST ===================== */
+/* ===== BUILD LIST ===== */
 function makeMSCell(idx, colKey, viewOnly) {
   const vo = viewOnly ? ' view-only' : '';
-  const tabIndex = viewOnly ? '' : ' tabindex="0"';
-  return `<div class="cell ms-cell${vo}" id="ms_${idx}_${colKey}"${tabIndex}>
+  return `<div class="cell ms-cell${vo}" id="ms_${idx}_${colKey}">
     <div class="ms-box" data-state="" data-idx="${idx}" data-key="${colKey}"></div>
   </div>`;
 }
@@ -1087,16 +1154,12 @@ function openPopup(idx, key, anchorEl) {
   _popupTarget = { idx, key };
   const popup = document.getElementById('ms-popup');
   const numRow = document.getElementById('popup-num-row');
-  const numInput = document.getElementById('popup-num-input');
   numRow.classList.remove('show');
-  numInput.value = '';
-
-  // Position popup near the tapped cell
+  document.getElementById('popup-num-input').value = '';
   const rect = anchorEl.getBoundingClientRect();
-  const popupW = 180;
   let left = rect.left;
   let top = rect.bottom + 4;
-  if (left + popupW > window.innerWidth) left = window.innerWidth - popupW - 8;
+  if (left + 180 > window.innerWidth) left = window.innerWidth - 188;
   if (top + 220 > window.innerHeight) top = rect.top - 220;
   popup.style.left = left + 'px';
   popup.style.top = top + 'px';
@@ -1131,30 +1194,24 @@ function popupNumConfirm() {
   closePopup();
 }
 
-document.getElementById('popup-num-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') popupNumConfirm();
-});
-
 function attachMSEvents() {
   document.querySelectorAll('.ms-cell:not(.view-only)').forEach(cell => {
     const box = cell.querySelector('.ms-box');
-    cell.addEventListener('click', () => {
-      openPopup(box.dataset.idx, box.dataset.key, cell);
-    });
+    cell.addEventListener('click', () => openPopup(box.dataset.idx, box.dataset.key, cell));
   });
 }
 
-function makeInputCell(id, placeholder, viewOnly) {
+function makeInputCell(id, viewOnly) {
   const ro = viewOnly ? ' readonly' : '';
   return `<div class="cell input-cell">
-    <input type="text" id="${id}" placeholder="${placeholder}" autocomplete="off"${ro}>
+    <input type="text" id="${id}" placeholder="—" autocomplete="off"${ro}>
   </div>`;
 }
 
 function makeNumberCell(id, viewOnly) {
   const ro = viewOnly ? ' readonly' : '';
   return `<div class="cell input-cell">
-    <input type="number" id="${id}" placeholder="0" min="0" autocomplete="off"${ro} style="width:100%;border:none;outline:none;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;text-align:center;background:transparent;color:var(--text);padding:2px;-moz-appearance:textfield;">
+    <input type="number" id="${id}" placeholder="0" min="0"${ro} style="width:100%;border:none;outline:none;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;text-align:center;background:transparent;color:var(--text);padding:2px;">
   </div>`;
 }
 
@@ -1162,7 +1219,6 @@ function buildList(viewOnly) {
   const list = document.getElementById('equip-list');
   list.innerHTML = '';
 
-  // Normal rows — multi-state cell
   EQUIPMENT_NORMAL.forEach((equip, idx) => {
     const row = document.createElement('div');
     row.className = 'equip-row';
@@ -1179,12 +1235,10 @@ function buildList(viewOnly) {
         ${makeMSCell(idx,'dev_night',viewOnly)}
         ${makeMSCell(idx,'cable_night',viewOnly)}
         ${makeMSCell(idx,'watch_night',viewOnly)}
-      </div>
-    `;
+      </div>`;
     list.appendChild(row);
   });
 
-  // Special rows — number inputs
   EQUIPMENT_SPECIAL.forEach((equip, si) => {
     const idx = EQUIPMENT_NORMAL.length + si;
     const row = document.createElement('div');
@@ -1192,45 +1246,43 @@ function buildList(viewOnly) {
     row.innerHTML = `
       <div class="row-id">${equip}</div>
       <div class="row-day-cells">
-        ${makeNumberCell(`sp_${idx}_btn_day`, viewOnly)}
-        ${makeNumberCell(`sp_${idx}_dev_day`, viewOnly)}
-        ${makeNumberCell(`sp_${idx}_cable_day`, viewOnly)}
-        ${makeNumberCell(`sp_${idx}_watch_day`, viewOnly)}
+        ${makeNumberCell(`sp_${idx}_btn_day`,viewOnly)}
+        ${makeNumberCell(`sp_${idx}_dev_day`,viewOnly)}
+        ${makeNumberCell(`sp_${idx}_cable_day`,viewOnly)}
+        ${makeNumberCell(`sp_${idx}_watch_day`,viewOnly)}
       </div>
       <div class="row-night-cells">
-        ${makeNumberCell(`sp_${idx}_btn_night`, viewOnly)}
-        ${makeNumberCell(`sp_${idx}_dev_night`, viewOnly)}
-        ${makeNumberCell(`sp_${idx}_cable_night`, viewOnly)}
-        ${makeNumberCell(`sp_${idx}_watch_night`, viewOnly)}
-      </div>
-    `;
+        ${makeNumberCell(`sp_${idx}_btn_night`,viewOnly)}
+        ${makeNumberCell(`sp_${idx}_dev_night`,viewOnly)}
+        ${makeNumberCell(`sp_${idx}_cable_night`,viewOnly)}
+        ${makeNumberCell(`sp_${idx}_watch_night`,viewOnly)}
+      </div>`;
     list.appendChild(row);
   });
 
-  // Total row — readonly, auto-calculated on save
   const totalRow = document.createElement('div');
   totalRow.className = 'equip-row row-total';
   totalRow.innerHTML = `
     <div class="row-id">รวม</div>
     <div class="row-day-cells">
-      ${makeInputCell('total_btn_day','—',true)}
-      ${makeInputCell('total_dev_day','—',true)}
-      ${makeInputCell('total_cable_day','—',true)}
-      ${makeInputCell('total_watch_day','—',true)}
+      ${makeInputCell('total_btn_day',true)}
+      ${makeInputCell('total_dev_day',true)}
+      ${makeInputCell('total_cable_day',true)}
+      ${makeInputCell('total_watch_day',true)}
     </div>
     <div class="row-night-cells">
-      ${makeInputCell('total_btn_night','—',true)}
-      ${makeInputCell('total_dev_night','—',true)}
-      ${makeInputCell('total_cable_night','—',true)}
-      ${makeInputCell('total_watch_night','—',true)}
-    </div>
-  `;
+      ${makeInputCell('total_btn_night',true)}
+      ${makeInputCell('total_dev_night',true)}
+      ${makeInputCell('total_cable_night',true)}
+      ${makeInputCell('total_watch_night',true)}
+    </div>`;
   list.appendChild(totalRow);
   if (!viewOnly) attachMSEvents();
 }
 
 function calcTotals() {
-  const sums = { btn_day:0, dev_day:0, cable_day:0, watch_day:0, btn_night:0, dev_night:0, cable_night:0, watch_night:0 };
+  const sums = {};
+  ALL_COL_KEYS.forEach(k => sums[k] = 0);
   EQUIPMENT_NORMAL.forEach((_, idx) => {
     ALL_COL_KEYS.forEach(key => {
       const val = getMSValue(idx, key);
@@ -1238,7 +1290,6 @@ function calcTotals() {
       else if (val && val !== '-') sums[key] += parseInt(val) || 0;
     });
   });
-  // Add special row numbers
   EQUIPMENT_SPECIAL.forEach((_, si) => {
     const idx = EQUIPMENT_NORMAL.length + si;
     ALL_COL_KEYS.forEach(key => {
@@ -1246,7 +1297,6 @@ function calcTotals() {
       if (el) sums[key] += parseInt(el.value) || 0;
     });
   });
-  // Write totals
   ALL_COL_KEYS.forEach(key => {
     const el = document.getElementById(`total_${key}`);
     if (el) el.value = sums[key] || '';
@@ -1254,16 +1304,13 @@ function calcTotals() {
   return sums;
 }
 
-/* ===================== FORM DATA ===================== */
+/* ===== FORM DATA ===== */
 function getFormData() {
   const checks = {};
   EQUIPMENT_NORMAL.forEach((_, idx) => {
     checks[idx] = {};
-    ALL_COL_KEYS.forEach(key => {
-      checks[idx][key] = getMSValue(idx, key);
-    });
+    ALL_COL_KEYS.forEach(key => { checks[idx][key] = getMSValue(idx, key); });
   });
-  // Special row numbers
   const specials = {};
   EQUIPMENT_SPECIAL.forEach((_, si) => {
     const idx = EQUIPMENT_NORMAL.length + si;
@@ -1273,24 +1320,16 @@ function getFormData() {
       specials[idx][key] = el ? (el.value || '') : '';
     });
   });
-  // Auto-calc totals
   const sums = calcTotals();
-  const totals = {
-    total_btn_day: String(sums.btn_day),
-    total_dev_day: String(sums.dev_day),
-    total_cable_day: String(sums.cable_day),
-    total_watch_day: String(sums.watch_day),
-    total_btn_night: String(sums.btn_night),
-    total_dev_night: String(sums.dev_night),
-    total_cable_night: String(sums.cable_night),
-    total_watch_night: String(sums.watch_night),
-  };
+  const totals = {};
+  ALL_COL_KEYS.forEach(k => { totals['total_' + k] = String(sums[k]); });
   return {
     checks, specials, totals,
     patientDay: document.getElementById('patient-day').value,
     patientNight: document.getElementById('patient-night').value,
     note: document.getElementById('note-field').value,
     date: document.getElementById('date-picker').value,
+    ward: currentWard,
     savedAt: new Date().toLocaleString('th-TH')
   };
 }
@@ -1303,7 +1342,6 @@ function applyFormData(data, viewOnly) {
       if (cell) cell.classList.toggle('view-only', viewOnly);
     });
   });
-  // Special rows
   EQUIPMENT_SPECIAL.forEach((_, si) => {
     const idx = EQUIPMENT_NORMAL.length + si;
     ALL_COL_KEYS.forEach(key => {
@@ -1311,10 +1349,9 @@ function applyFormData(data, viewOnly) {
       if (el) { el.value = data.specials?.[idx]?.[key] || ''; el.readOnly = viewOnly; }
     });
   });
-  // Totals (read-only always, just show)
   Object.entries(data.totals || {}).forEach(([id, val]) => {
     const el = document.getElementById(id);
-    if (el) { el.value = val; }
+    if (el) el.value = val;
   });
   const pdEl = document.getElementById('patient-day');
   const pnEl = document.getElementById('patient-night');
@@ -1328,7 +1365,7 @@ function applyFormData(data, viewOnly) {
 
 function clearForm() {
   EQUIPMENT_NORMAL.forEach((_, idx) => {
-    ALL_COL_KEYS.forEach(key => { setMSValue(idx, key, null); });
+    ALL_COL_KEYS.forEach(key => setMSValue(idx, key, null));
   });
   EQUIPMENT_SPECIAL.forEach((_, si) => {
     const idx = EQUIPMENT_NORMAL.length + si;
@@ -1339,7 +1376,7 @@ function clearForm() {
   });
   ALL_COL_KEYS.forEach(key => {
     const el = document.getElementById(`total_${key}`);
-    if (el) { el.value = ''; }
+    if (el) el.value = '';
   });
   ['patient-day','patient-night','note-field'].forEach(id => {
     const el = document.getElementById(id);
@@ -1352,41 +1389,27 @@ function setLocked(locked) {
   EQUIPMENT_NORMAL.forEach((_, idx) => {
     ALL_COL_KEYS.forEach(key => {
       const cell = document.getElementById(`ms_${idx}_${key}`);
-      if (cell) {
-        cell.classList.toggle('view-only', locked);
-        if (locked) cell.removeAttribute('tabindex');
-        else cell.setAttribute('tabindex', '0');
-      }
+      if (cell) cell.classList.toggle('view-only', locked);
     });
   });
   EQUIPMENT_SPECIAL.forEach((_, si) => {
     const idx = EQUIPMENT_NORMAL.length + si;
     ALL_COL_KEYS.forEach(key => {
       const el = document.getElementById(`sp_${idx}_${key}`);
-      if (el) { el.readOnly = locked; el.style.color = locked ? '#999' : ''; }
+      if (el) { el.readOnly = locked; }
     });
   });
-  document.querySelectorAll('textarea').forEach(el => {
-    el.readOnly = locked;
-    el.style.color = locked ? '#999' : '';
-  });
+  document.querySelectorAll('textarea').forEach(el => el.readOnly = locked);
 }
 
-/* ===================== LOAD DATE ===================== */
 async function loadDateRecord(dateKey) {
   showLoading(true);
   const data = await storageGet(dateKey);
   showLoading(false);
-  if (data) {
-    savedData = data;
-    applyFormData(data, false);
-  } else {
-    savedData = null;
-    clearForm();
-  }
+  if (data) { savedData = data; applyFormData(data, false); }
+  else { savedData = null; clearForm(); }
 }
 
-/* ===================== SAVE / EDIT ===================== */
 async function saveData() {
   savedData = getFormData();
   try {
@@ -1405,21 +1428,16 @@ function editData() {
   showToast('สามารถแก้ไขได้แล้ว');
 }
 
-/* ===================== SUMMARY ===================== */
+/* ===== SUMMARY ===== */
 function showSummary() {
   const data = savedData || getFormData();
   const dateStr = data.date ? (() => {
     const [y,m,d] = data.date.split('-');
     return `${parseInt(d)}/${parseInt(m)}/${parseInt(y)+543}`;
   })() : '';
-  document.getElementById('sum-date-label').textContent = `วันที่ ${dateStr}`;
-  // Hide stat-grid
-  document.getElementById('stat-grid').innerHTML = '';
-
+  document.getElementById('sum-date-label').textContent = `วันที่ ${dateStr} — ${(data.ward||currentWard||'').toUpperCase()}`;
   const colLabels = ['กระดุม 07-19น.','ตัวเครื่อง 07-19น.','สายชาร์จ 07-19น.','Smart Watch 07-19น.','กระดุม 19-07น.','ตัวเครื่อง 19-07น.','สายชาร์จ 19-07น.','Smart Watch 19-07น.'];
   const hdrCells = colLabels.map(c => `<th>${c}</th>`).join('');
-
-  // Normal rows
   const normalRows = EQUIPMENT_NORMAL.map((equip, idx) => {
     const cells = ALL_COL_KEYS.map(key => {
       const val = data.checks?.[idx]?.[key];
@@ -1431,34 +1449,24 @@ function showSummary() {
     }).join('');
     return `<tr><td>${equip}</td>${cells}</tr>`;
   }).join('');
-
-  // Special rows (numbers)
   const specialRows = EQUIPMENT_SPECIAL.map((equip, si) => {
     const idx = EQUIPMENT_NORMAL.length + si;
-    const cells = ALL_COL_KEYS.map(key =>
-      `<td>${data.specials?.[idx]?.[key] || '—'}</td>`
-    ).join('');
+    const cells = ALL_COL_KEYS.map(key => `<td>${data.specials?.[idx]?.[key] || '—'}</td>`).join('');
     return `<tr style="background:#fff8f0;"><td style="color:var(--red);">${equip}</td>${cells}</tr>`;
   }).join('');
-
-  // Total row
   const t = data.totals || {};
-  const totalCols = ['total_btn_day','total_dev_day','total_cable_day','total_watch_day','total_btn_night','total_dev_night','total_cable_night','total_watch_night'];
-  const totalCells2 = totalCols.map(k => `<td><strong>${t[k]||'—'}</strong></td>`).join('');
-  const totalRow = `<tr style="background:#edf0f7;"><td><strong>รวม</strong></td>${totalCells2}</tr>`;
-
+  const totalCols = ALL_COL_KEYS.map(k => 'total_' + k);
+  const totalCells = totalCols.map(k => `<td><strong>${t[k]||'—'}</strong></td>`).join('');
   document.getElementById('summary-table-wrap').innerHTML = `
     <table class="sum-tbl">
       <thead><tr><th>หมายเลข</th>${hdrCells}</tr></thead>
-      <tbody>${normalRows}${specialRows}${totalRow}</tbody>
-    </table>
-  `;
+      <tbody>${normalRows}${specialRows}<tr style="background:#edf0f7;"><td><strong>รวม</strong></td>${totalCells}</tr></tbody>
+    </table>`;
   document.getElementById('summary-notes').innerHTML = `
     <div><strong>ยอดผู้ป่วย (07-19น.):</strong> ${data.patientDay || '—'}</div>
     <div><strong>ยอดผู้ป่วย (19-07น.):</strong> ${data.patientNight || '—'}</div>
     <div><strong>หมายเหตุ:</strong> ${data.note || '—'}</div>
-    ${data.savedAt ? `<div style="margin-top:8px;font-size:11px;color:#999;">บันทึกเมื่อ: ${data.savedAt}</div>` : ''}
-  `;
+    ${data.savedAt ? `<div style="margin-top:8px;font-size:11px;color:#999;">บันทึกเมื่อ: ${data.savedAt}</div>` : ''}`;
   document.getElementById('main-page').style.display = 'none';
   document.getElementById('summary-page').style.display = 'block';
   document.getElementById('action-bar').style.display = 'none';
@@ -1471,7 +1479,7 @@ function goBack() {
   document.getElementById('action-bar').style.display = 'flex';
 }
 
-/* ===================== PAGE SWITCH ===================== */
+/* ===== PAGE SWITCH ===== */
 function switchPage(page) {
   currentPage = page;
   document.getElementById('tab-form').classList.toggle('active', page==='form');
@@ -1482,7 +1490,7 @@ function switchPage(page) {
   if (page === 'history') renderHistory();
 }
 
-/* ===================== HISTORY ===================== */
+/* ===== HISTORY ===== */
 function thaiMonthFull(y, m) {
   const MN = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
   return `${MN[m]} ${y+543}`;
@@ -1503,8 +1511,8 @@ function changeMonth(dir) {
 }
 
 function calcSummaryFromRecord(r) {
-  // Count checked per column from normal rows
-  const c = { btn_day:0, dev_day:0, cable_day:0, watch_day:0, btn_night:0, dev_night:0, cable_night:0, watch_night:0 };
+  const c = {};
+  ALL_COL_KEYS.forEach(k => c[k] = 0);
   EQUIPMENT_NORMAL.forEach((_, idx) => {
     ALL_COL_KEYS.forEach(key => {
       const val = r.checks?.[idx]?.[key];
@@ -1512,30 +1520,20 @@ function calcSummaryFromRecord(r) {
       else if (val && val !== '-' && val !== false) c[key] += parseInt(val) || 0;
     });
   });
-  // Add special rows
-  EQUIPMENT_SPECIAL.forEach((_, si) => {
-    const idx = EQUIPMENT_NORMAL.length + si;
-    ALL_COL_KEYS.forEach(key => { c[key] += parseInt(r.specials?.[idx]?.[key]) || 0; });
-  });
-  // Also use saved totals if present (for older records)
   const t = r.totals || {};
-  return {
-    btn_day:   t.total_btn_day   !== undefined ? (parseInt(t.total_btn_day)   || c.btn_day)   : c.btn_day,
-    dev_day:   t.total_dev_day   !== undefined ? (parseInt(t.total_dev_day)   || c.dev_day)   : c.dev_day,
-    cable_day: t.total_cable_day !== undefined ? (parseInt(t.total_cable_day) || c.cable_day) : c.cable_day,
-    watch_day: t.total_watch_day !== undefined ? (parseInt(t.total_watch_day) || c.watch_day) : c.watch_day,
-    btn_night:   t.total_btn_night   !== undefined ? (parseInt(t.total_btn_night)   || c.btn_night)   : c.btn_night,
-    dev_night:   t.total_dev_night   !== undefined ? (parseInt(t.total_dev_night)   || c.dev_night)   : c.dev_night,
-    cable_night: t.total_cable_night !== undefined ? (parseInt(t.total_cable_night) || c.cable_night) : c.cable_night,
-    watch_night: t.total_watch_night !== undefined ? (parseInt(t.total_watch_night) || c.watch_night) : c.watch_night,
-  };
+  const result = {};
+  ALL_COL_KEYS.forEach(k => {
+    const tk = 'total_' + k;
+    result[k] = t[tk] !== undefined ? (parseInt(t[tk]) || c[k]) : c[k];
+  });
+  return result;
 }
 
 function n(v) { return (v && v !== '0') ? v : '—'; }
 
 async function deleteMonth() {
   const label = document.getElementById('hist-month-label').textContent;
-  if (!confirm(`ลบข้อมูลทั้งหมดของ ${label} ใช่ไหม?\n\nไม่สามารถกู้คืนได้`)) return;
+  if (!confirm(`ลบข้อมูลทั้งหมดของ ${label} ใช่ไหม?`)) return;
   showLoading(true);
   const allKeys = await storageListKeys();
   const prefix = `${histMonth.y}-${String(histMonth.m+1).padStart(2,'0')}`;
@@ -1566,30 +1564,22 @@ async function renderHistory() {
     const hasNote = r.note && r.note.trim();
     return `
     <div class="hist-item" onclick="openHistoryDate('${k}')">
-      <div class="hist-item-top">
-        <div class="hist-item-date">${thaiDateFull(k)}</div>
-        ${r.savedAt ? `<div class="hist-item-meta">บันทึกเมื่อ ${r.savedAt}</div>` : ''}
-      </div>
+      <div class="hist-item-date">${thaiDateFull(k)}</div>
+      ${r.savedAt ? `<div class="hist-item-meta">บันทึกเมื่อ ${r.savedAt}</div>` : ''}
       <div class="hist-summary-grid">
         <div class="hist-shift-block">
           <div class="hist-shift-title">☀️ เวรเช้า 07-19น.</div>
-          <div class="hist-shift-rows">
-            <div class="hist-row"><span class="hist-lbl">กระดุม</span><span class="hist-val">${n(s.btn_day)}</span></div>
-            <div class="hist-row"><span class="hist-lbl">ตัวเครื่อง</span><span class="hist-val">${n(s.dev_day)}</span></div>
-            <div class="hist-row"><span class="hist-lbl">สายชาร์จ</span><span class="hist-val">${n(s.cable_day)}</span></div>
-            <div class="hist-row"><span class="hist-lbl">Smart Watch</span><span class="hist-val">${n(s.watch_day)}</span></div>
-            <div class="hist-row"><span class="hist-lbl">ยอดผู้ป่วย</span><span class="hist-val">${r.patientDay || '—'}</span></div>
-          </div>
+          <div class="hist-row"><span class="hist-lbl">กระดุม</span><span class="hist-val">${n(s.btn_day)}</span></div>
+          <div class="hist-row"><span class="hist-lbl">ตัวเครื่อง</span><span class="hist-val">${n(s.dev_day)}</span></div>
+          <div class="hist-row"><span class="hist-lbl">สายชาร์จ</span><span class="hist-val">${n(s.cable_day)}</span></div>
+          <div class="hist-row"><span class="hist-lbl">ยอดผู้ป่วย</span><span class="hist-val">${r.patientDay || '—'}</span></div>
         </div>
         <div class="hist-shift-block hist-shift-night">
           <div class="hist-shift-title">🌙 เวรดึก 19-07น.</div>
-          <div class="hist-shift-rows">
-            <div class="hist-row"><span class="hist-lbl">กระดุม</span><span class="hist-val">${n(s.btn_night)}</span></div>
-            <div class="hist-row"><span class="hist-lbl">ตัวเครื่อง</span><span class="hist-val">${n(s.dev_night)}</span></div>
-            <div class="hist-row"><span class="hist-lbl">สายชาร์จ</span><span class="hist-val">${n(s.cable_night)}</span></div>
-            <div class="hist-row"><span class="hist-lbl">Smart Watch</span><span class="hist-val">${n(s.watch_night)}</span></div>
-            <div class="hist-row"><span class="hist-lbl">ยอดผู้ป่วย</span><span class="hist-val">${r.patientNight || '—'}</span></div>
-          </div>
+          <div class="hist-row"><span class="hist-lbl">กระดุม</span><span class="hist-val">${n(s.btn_night)}</span></div>
+          <div class="hist-row"><span class="hist-lbl">ตัวเครื่อง</span><span class="hist-val">${n(s.dev_night)}</span></div>
+          <div class="hist-row"><span class="hist-lbl">สายชาร์จ</span><span class="hist-val">${n(s.cable_night)}</span></div>
+          <div class="hist-row"><span class="hist-lbl">ยอดผู้ป่วย</span><span class="hist-val">${r.patientNight || '—'}</span></div>
         </div>
       </div>
       ${hasNote ? `<div class="hist-note">📝 ${r.note}</div>` : ''}
@@ -1603,7 +1593,6 @@ async function openHistoryDate(dateKey) {
   const data = await storageGet(dateKey);
   showLoading(false);
   if (!data) return;
-  // Switch to form page, load data as view-only
   currentPage = 'form';
   document.getElementById('tab-form').classList.add('active');
   document.getElementById('tab-history').classList.remove('active');
@@ -1616,7 +1605,7 @@ async function openHistoryDate(dateKey) {
   showToast('โหลดข้อมูล ' + thaiDateFull(dateKey));
 }
 
-/* ===================== UTILS ===================== */
+/* ===== UTILS ===== */
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
@@ -1627,29 +1616,36 @@ function showLoading(show) {
   document.getElementById('loading-screen').style.display = show ? 'flex' : 'none';
 }
 
-function initQR() {
-  const url = window.location.href;
-  const img = document.getElementById('qr-img');
-  const apiUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(url)}&choe=UTF-8`;
-  const testImg = new Image();
-  testImg.onload = () => { img.src = apiUrl; };
-  testImg.src = apiUrl;
+/* ===== INIT ===== */
+function initApp() {
+  buildList(false);
+  setTodayDate();
+  histMonth = { y: new Date().getFullYear(), m: new Date().getMonth() };
+  document.getElementById('date-picker').addEventListener('change', e => {
+    updateThaiDate(e.target.value);
+    loadDateRecord(e.target.value);
+  });
+  document.getElementById('popup-num-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') popupNumConfirm();
+  });
+  (async () => {
+    showLoading(true);
+    const data = await storageGet(todayKey());
+    showLoading(false);
+    if (data) { savedData = data; applyFormData(data, false); }
+  })();
 }
 
-/* ===================== INIT ===================== */
-buildList(false);
-setTodayDate();
-initQR();
-// Load today's saved data on startup
-(async () => {
-  showLoading(true);
-  const data = await storageGet(todayKey());
-  showLoading(false);
-  if (data) {
-    savedData = data;
-    applyFormData(data, false);
-  }
-})();
+// ตรวจสอบ session ที่บันทึกไว้
+const savedWard = sessionStorage.getItem('bbraun_ward');
+if (savedWard && WARD_ACCOUNTS[savedWard]) {
+  currentWard = savedWard;
+  document.getElementById('login-page').style.display = 'none';
+  document.getElementById('main-page').style.display = 'block';
+  document.getElementById('action-bar').style.display = 'flex';
+  document.getElementById('ward-badge').textContent = '🏥 ' + savedWard.toUpperCase();
+  initApp();
+}
 </script>
 </body>
 </html>
